@@ -18,4 +18,13 @@ export class UserService {
       });
     return user;
   }
+
+  async findById(userId: string): Promise<Users> {
+    const user = this.userRepo
+      .findOneOrFail({ where: { id: userId } })
+      .catch(() => {
+        throw new NotFoundException('User does not exist.');
+      });
+    return user;
+  }
 }

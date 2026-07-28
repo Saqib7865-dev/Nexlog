@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -13,6 +14,7 @@ import {
   MinLength,
   MaxLength,
 } from 'class-validator';
+import { Blogs } from './blog.entity';
 
 export enum UserRole {
   ADMIN = 'Admin',
@@ -59,4 +61,10 @@ export class Users {
 
   @CreateDateColumn()
   updatedAt!: Date;
+
+  @OneToMany(() => Blogs, (Blog) => Blog.author, {
+    nullable: true,
+    cascade: true,
+  })
+  blogs?: Blogs[];
 }
